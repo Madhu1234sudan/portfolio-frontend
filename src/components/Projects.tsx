@@ -61,7 +61,7 @@ export default function Projects() {
 
                 {/* TITLE */}
                 <h3 className="text-2xl font-bold mb-4">
-                  {project.title}
+                  {project.title} 
                 </h3>
 
                 {/* DESCRIPTION */}

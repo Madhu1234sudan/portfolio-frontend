@@ -83,11 +83,10 @@ export default function AddProjectForm() {
       setLiveUrl("");
       setFeatured(false);
 
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
 
       setError(
-        error.response?.data?.message ||
         "Something went wrong."
       );
     }

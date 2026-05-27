@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import EditProjectModal from "./EditProjectModal";
 
 import api from "../../lib/api";
 import { Project } from "../../types/project";
@@ -8,6 +9,10 @@ import { Project } from "../../types/project";
 export default function ProjectTable() {
   const [projects, setProjects] =
     useState<Project[]>([]);
+  const [
+  selectedProject,
+  setSelectedProject,
+] = useState<Project | null>(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -43,7 +48,7 @@ export default function ProjectTable() {
         sessionStorage.getItem(
           "adminToken"
         );
-
+        console.log(token);
       await api.delete(
         `/projects/${id}`,
         {
@@ -76,11 +81,11 @@ export default function ProjectTable() {
 
             <tr>
               <th className="text-left p-5 text-gray-400">
-                Project
+                Project 
               </th>
 
               <th className="text-left p-5 text-gray-400">
-                Tech Stack
+                Tech Stack 
               </th>
 
               <th className="text-left p-5 text-gray-400">
@@ -127,7 +132,9 @@ export default function ProjectTable() {
 
                 <td className="p-5 flex gap-3">
 
-                  <button className="bg-blue-500 hover:bg-blue-400 transition-all px-4 py-2 rounded-lg text-black font-medium">
+                  <button onClick={()=>
+                    setSelectedProject(project)}
+                    className = "bg-blue-500 hover:bg-blue-400 transition-all px-4 py-2 rounded-lg text-black font-medium">
                     Edit
                   </button>
 
@@ -153,6 +160,25 @@ export default function ProjectTable() {
         </table>
 
       </div>
+
+         {selectedProject && (
+        <EditProjectModal
+  project={selectedProject}
+  onClose={() =>
+    setSelectedProject(null)
+  }
+  onUpdate={(updatedProject) =>
+    setProjects((prev) =>
+      prev.map((project) =>
+        project.id ===
+        updatedProject.id
+          ? updatedProject
+          : project
+      )
+    )
+  }
+/>
+      )}
 
     </div>
   );
