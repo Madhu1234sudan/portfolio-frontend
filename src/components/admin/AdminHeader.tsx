@@ -2,7 +2,18 @@
 
 import { useRouter } from "next/navigation";
 
-export default function AdminHeader() {
+interface AdminHeaderProps {
+  sidebarOpen: boolean;
+
+  setSidebarOpen:
+    React.Dispatch<
+      React.SetStateAction<boolean>
+      >;
+}
+export default function AdminHeader({
+  sidebarOpen,
+  setSidebarOpen,
+}: AdminHeaderProps) {
   const router = useRouter();
 
   const handleLogout = () => {
@@ -16,15 +27,30 @@ export default function AdminHeader() {
   return (
     <header className="flex items-center justify-between p-6 border-b border-zinc-800 bg-zinc-950">
 
-      <div>
-        <h1 className="text-3xl font-bold text-white">
-          AI Portfolio Admin
-        </h1>
+      <div className="flex items-center gap-4">
 
-        <p className="text-zinc-400 mt-1">
-          Manage your Data Science projects
-        </p>
-      </div>
+  <button
+    onClick={() =>
+      setSidebarOpen(!sidebarOpen)
+    }
+    className="bg-zinc-900 hover:bg-zinc-800 transition-all p-3 rounded-xl border border-zinc-700 text-white"
+  >
+    ☰
+  </button>
+
+  <div>
+
+    <h1 className="text-3xl font-bold text-white">
+      AI Portfolio Admin
+    </h1>
+
+    <p className="text-zinc-400 mt-1">
+      Manage your Data Science projects
+    </p>
+
+  </div>
+
+</div>
 
       <button
         onClick={handleLogout}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { jwtDecode } from "jwt-decode";
@@ -16,10 +17,12 @@ interface DecodedToken {
 
 export default function AdminPage() {
   const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = 
+          useState(true);
 
   useEffect(() => {
     const token =
-      localStorage.getItem("adminToken");
+      sessionStorage.getItem("adminToken");
 
     if (!token) {
       router.push("/admin/login");
@@ -34,15 +37,15 @@ export default function AdminPage() {
         Date.now() / 1000;
 
       if (decoded.exp < currentTime) {
-        localStorage.removeItem(
+        sessionStorage.removeItem(
           "adminToken"
         );
 
         router.push("/admin/login");
       }
 
-    } catch (error) {
-      localStorage.removeItem(
+    } catch{
+      sessionStorage.removeItem(
         "adminToken"
       );
 
@@ -54,11 +57,12 @@ export default function AdminPage() {
   return (
     <main className="flex bg-zinc-950 min-h-screen">
 
-      <AdminSidebar />
+      <AdminSidebar sidebarOpen = {sidebarOpen}/>
 
       <div className="flex-1">
 
-        <AdminHeader />
+        <AdminHeader sidebarOpen={sidebarOpen}
+                     setSidebarOpen={setSidebarOpen} />
 
         <div className="p-8 space-y-8">
 
