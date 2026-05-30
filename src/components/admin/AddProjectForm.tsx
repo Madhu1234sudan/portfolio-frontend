@@ -49,7 +49,7 @@ export default function AddProjectForm() {
 
     try {
       const token =
-        localStorage.getItem("adminToken");
+        sessionStorage.getItem("adminToken");
 
       await api.post(
         "/projects",
