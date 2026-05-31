@@ -7,21 +7,30 @@ interface AdminSidebarProps {
     React.Dispatch<
       React.SetStateAction<string>
     >;
+
+  setSidebarOpen:
+    React.Dispatch<
+      React.SetStateAction<boolean>
+    >;
 }
 
 export default function AdminSidebar({
   sidebarOpen,
   activeSection,
   setActiveSection,
+  setSidebarOpen,
 }: AdminSidebarProps) 
 {
   
   return (
-    <aside className={`bg-black border-r border-zinc-800 min-h-screen p-8 transition-all duration-300 ${
-      sidebarOpen
-      ? "w-72"
-      : "w-16"
-    }`}>
+<aside
+  className={`fixed top-[88px] left-0 z-50 h-[calc(100vh-88px)] bg-black border-r border-zinc-800 transition-all duration-300 overflow-hidden ${
+    sidebarOpen
+      ? "w-64 translate-x-0"
+      : "w-64 -translate-x-full"
+  }`}
+>
+  <div className="p-8"></div>
 
      {sidebarOpen && (
   <div className="mb-12">
@@ -35,18 +44,19 @@ export default function AdminSidebar({
   </div>
 )}
 
-      <nav className={sidebarOpen ? "space-y-4" : "space-y-3"}>
+      <nav className="space-y-4" >
 
         <button
-  onClick={() =>
-    setActiveSection("Dashboard")
-  }
+ onClick={() => {
+  setActiveSection("Dashboard");
+  setSidebarOpen(false);
+}}
   className={`w-full flex items-center transition-all rounded-2xl border text-white ${
     activeSection === "Dashboard"
   ? "bg-zinc-700 border-l-4 border-green-400 text-white px-5 py-4 justify-start gap-3"
       : sidebarOpen
       ? "bg-zinc-800 hover:bg-zinc-700 border-zinc-700 px-5 py-4 justify-start gap-3"
-      : "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 w-14 h-14 mx-auto justify-center"
+      : "bg-zinc-800 hover:bg-zinc-700 border-zinc-700 px-5 py-4 justify-start gap-3"
   }`}
 >
 
@@ -62,15 +72,16 @@ export default function AdminSidebar({
 
 </button>
 
-        <button onClick={() =>
-  setActiveSection("Projects")
-}
+        <button onClick={() => {
+  setActiveSection("Projects");
+  setSidebarOpen(false);
+}}
   className={`w-full flex items-center transition-all rounded-2xl border text-white ${
   activeSection === "Projects"
     ? "bg-zinc-700 border-l-4 border-green-400 text-white px-5 py-4 justify-start gap-3"
     : sidebarOpen
     ? "bg-zinc-800 hover:bg-zinc-700 border-zinc-700 px-5 py-4 justify-start gap-3"
-    : "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 w-14 h-14 mx-auto justify-center"
+    :  "bg-zinc-800 hover:bg-zinc-700 border-zinc-700 px-5 py-4 justify-start gap-3"
 }`}
 >
 
@@ -86,15 +97,16 @@ export default function AdminSidebar({
 
 </button>
 
-        <button onClick={() =>
-  setActiveSection("AI Research")
-}
+        <button onClick={() => {
+  setActiveSection("AI Research");
+  setSidebarOpen(false);
+}}
   className={`w-full flex items-center transition-all rounded-2xl border text-white ${
   activeSection === "AI Research"
     ? "bg-zinc-700 border-l-4 border-green-400 text-white px-5 py-4 justify-start gap-3"
     : sidebarOpen
     ? "bg-zinc-800 hover:bg-zinc-700 border-zinc-700 px-5 py-4 justify-start gap-3"
-    : "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 w-14 h-14 mx-auto justify-center"
+    :  "bg-zinc-800 hover:bg-zinc-700 border-zinc-700 px-5 py-4 justify-start gap-3"
 }`}
 >
 
@@ -110,15 +122,16 @@ export default function AdminSidebar({
 
 </button>
 
-        <button onClick={() =>
-  setActiveSection("Analytics")
-}
+        <button onClick={() => {
+  setActiveSection("Analytics");
+  setSidebarOpen(false);
+}}
   className={`w-full flex items-center transition-all rounded-2xl border text-white ${
   activeSection === "Analytics"
     ? "bg-zinc-700 border-l-4 border-green-400 text-white px-5 py-4 justify-start gap-3"
     : sidebarOpen
     ? "bg-zinc-800 hover:bg-zinc-700 border-zinc-700 px-5 py-4 justify-start gap-3"
-    : "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 w-14 h-14 mx-auto justify-center"
+    : "bg-zinc-800 hover:bg-zinc-700 border-zinc-700 px-5 py-4 justify-start gap-3"
 }`}
 >
 

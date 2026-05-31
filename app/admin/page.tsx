@@ -19,8 +19,8 @@ interface DecodedToken {
 
 export default function AdminPage() {
   const router = useRouter();
-  const [sidebarOpen, setSidebarOpen] = 
-          useState(true);
+  const [sidebarOpen, setSidebarOpen] =
+  useState(false);
   const [
   activeSection,
   setActiveSection,
@@ -77,12 +77,21 @@ fetchProjects();
 
   return (
     <main className="flex bg-zinc-950 min-h-screen">
+      {sidebarOpen && (
+  <div
+    onClick={() => setSidebarOpen(false)}
+    className="fixed inset-0 bg-black/50 z-40"
+  />
+)}
 
-      <AdminSidebar
+      {sidebarOpen && (
+<AdminSidebar
   sidebarOpen={sidebarOpen}
   activeSection={activeSection}
   setActiveSection={setActiveSection}
+  setSidebarOpen={setSidebarOpen}
 />
+)}
 
       <div className="flex-1">
 
@@ -203,8 +212,13 @@ fetchProjects();
 
   {activeSection === "Projects" && (
     <>
-      <AddProjectForm />
-      <ProjectTable />
+      <AddProjectForm
+  setProjects={setProjects}
+/>
+      <ProjectTable
+  projects={projects}
+  setProjects={setProjects}
+/>
     </>
   )}
 
@@ -220,17 +234,75 @@ fetchProjects();
     </div>
   )}
 
-  {activeSection === "Analytics" && (
+{activeSection === "Analytics" && (
+  <div className="space-y-8">
+
     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
+
       <h2 className="text-3xl font-bold text-white mb-4">
-        Analytics
+        Analytics Dashboard
       </h2>
 
       <p className="text-zinc-400">
-        Analytics dashboard coming soon.
+        Real-time portfolio statistics.
       </p>
+
     </div>
-  )}
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+        <h3 className="text-zinc-400 text-sm">
+          Total Projects
+        </h3>
+
+        <p className="text-4xl font-bold text-white mt-3">
+          {projects.length}
+        </p>
+      </div>
+
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+        <h3 className="text-zinc-400 text-sm">
+          Featured Projects
+        </h3>
+
+        <p className="text-4xl font-bold text-green-400 mt-3">
+          {
+            projects.filter(
+              (project) => project.featured
+            ).length
+          }
+        </p>
+      </div>
+
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+        <h3 className="text-zinc-400 text-sm">
+          Regular Projects
+        </h3>
+
+        <p className="text-4xl font-bold text-white mt-3">
+          {
+            projects.filter(
+              (project) => !project.featured
+            ).length
+          }
+        </p>
+      </div>
+
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+        <h3 className="text-zinc-400 text-sm">
+          Portfolio Status
+        </h3>
+
+        <p className="text-2xl font-bold text-green-400 mt-3">
+          Active
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+)}
 
 </div>
 

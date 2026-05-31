@@ -1,34 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import EditProjectModal from "./EditProjectModal";
 
 import api from "../../lib/api";
 import { Project } from "../../types/project";
 
-export default function ProjectTable() {
-  const [projects, setProjects] =
-    useState<Project[]>([]);
+interface ProjectTableProps {
+  projects: Project[];
+
+  setProjects:
+    React.Dispatch<
+      React.SetStateAction<Project[]>
+    >;
+}
+
+export default function ProjectTable({
+  projects,
+  setProjects,
+}: ProjectTableProps) {
+ 
   const [
   selectedProject,
   setSelectedProject,
 ] = useState<Project | null>(null);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response =
-          await api.get("/projects");
-
-        setProjects(response.data);
-
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchProjects();
-  }, []);
+  
 
 
 

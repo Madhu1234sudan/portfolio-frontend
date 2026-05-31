@@ -27,14 +27,14 @@ export default function AdminHeader({
   return (
     <header className="flex items-center justify-between p-6 border-b border-zinc-800 bg-zinc-950">
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
 
-  <button
-    onClick={() =>
-      setSidebarOpen(!sidebarOpen)
-    }
-    className="bg-zinc-900 hover:bg-zinc-800 transition-all p-3 rounded-xl border border-zinc-700 text-white"
-  >
+ <button
+  onClick={() =>
+    setSidebarOpen(!sidebarOpen)
+  }
+  className="relative z-[60] ml-2 bg-zinc-900 hover:bg-zinc-800 transition-all p-3 rounded-xl border border-zinc-700 text-white"
+>
     ☰
   </button>
 

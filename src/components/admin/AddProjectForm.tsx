@@ -4,7 +4,18 @@ import { useState } from "react";
 
 import api from "../../lib/api";
 
-export default function AddProjectForm() {
+import { Project } from "../../types/project";
+
+interface AddProjectFormProps {
+  setProjects:
+    React.Dispatch<
+      React.SetStateAction<Project[]>
+    >;
+}
+
+export default function AddProjectForm({
+  setProjects,
+}: AddProjectFormProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] =
     useState("");
@@ -51,7 +62,9 @@ export default function AddProjectForm() {
       const token =
         sessionStorage.getItem("adminToken");
 
-      await api.post(
+      const response =
+  await api.post(
+    
         "/projects",
         {
           title,
@@ -71,6 +84,14 @@ export default function AddProjectForm() {
           },
         }
       );
+      setProjects((prev) => [
+  response.data,
+  ...prev,
+]);
+
+setSuccess(
+  "Project created successfully."
+);
 
       setSuccess(
         "Project created successfully."
