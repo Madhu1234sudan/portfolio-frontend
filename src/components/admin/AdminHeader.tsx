@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
 
 interface AdminHeaderProps {
   sidebarOpen: boolean;
@@ -25,7 +26,17 @@ export default function AdminHeader({
   };
 
   return (
-    <header className="flex items-center justify-between p-6 border-b border-zinc-800 bg-zinc-950">
+    <header className="
+flex items-center
+justify-between
+p-6
+border-b
+border-zinc-300
+dark:border-zinc-800
+bg-white
+dark:bg-zinc-950
+transition-colors
+">
 
       <div className="flex items-center gap-6">
 
@@ -40,11 +51,11 @@ export default function AdminHeader({
 
   <div>
 
-    <h1 className="text-3xl font-bold text-white">
+    <h1 className="text-3xl font-bold text-black dark:text-white">
       AI Portfolio Admin
     </h1>
 
-    <p className="text-zinc-400 mt-1">
+   <p className="text-zinc-600 dark:text-zinc-400 mt-1">
       Manage your Data Science projects
     </p>
 
@@ -52,12 +63,18 @@ export default function AdminHeader({
 
 </div>
 
-      <button
-        onClick={handleLogout}
-        className="bg-red-500 hover:bg-red-400 transition-all px-5 py-2 rounded-xl text-white font-medium"
-      >
-        Logout
-      </button>
+      <div className="flex items-center gap-4">
+
+  <ThemeToggle />
+
+  <button
+    onClick={handleLogout}
+    className="bg-red-500 hover:bg-red-400 transition-all px-5 py-2 rounded-xl text-white font-medium"
+  >
+    Logout
+  </button>
+
+</div>
 
     </header>
   );
