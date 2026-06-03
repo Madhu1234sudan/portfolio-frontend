@@ -5,29 +5,51 @@ import { useTheme } from "next-themes";
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
+  const isDark = theme === "dark";
+
   return (
     <button
       onClick={() =>
-        setTheme(
-          theme === "dark"
-            ? "light"
-            : "dark"
-        )
+        setTheme(isDark ? "light" : "dark")
       }
       className="
-        px-4
-        py-2
-        rounded-xl
+        relative
+        flex
+        items-center
+        w-16
+        h-9
+        rounded-full
         border
-        border-zinc-700
-        text-white
-        hover:bg-zinc-800
+        border-zinc-300
+        dark:border-zinc-700
+        bg-zinc-100
+        dark:bg-zinc-900
         transition-all
       "
     >
-      {theme === "dark"
-        ? "☀️ Light"
-        : "🌙 Dark"}
+      <div
+        className={`
+          absolute
+          flex
+          items-center
+          justify-center
+          w-7
+          h-7
+          rounded-full
+          bg-white
+          dark:bg-zinc-800
+          shadow-md
+          transition-all
+          duration-300
+          ${
+            isDark
+              ? "translate-x-8"
+              : "translate-x-1"
+          }
+        `}
+      >
+        {isDark ? "🌙" : "☀️"}
+      </div>
     </button>
   );
 }
