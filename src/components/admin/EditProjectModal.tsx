@@ -60,14 +60,48 @@ export default function EditProjectModal({
     }
   };
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-6">
-      <div className="w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
+    <div
+  className="
+  fixed
+  inset-0
+  bg-black/70
+  flex
+  items-center
+  justify-center
+  z-50
+  p-6
+  overflow-y-auto
+"
+>
+      <div
+  className="
+  w-full
+  max-w-2xl
+  max-h-[90vh]
+  overflow-y-auto
+  bg-white
+  dark:bg-zinc-900
+  border
+  border-zinc-300
+  dark:border-zinc-800
+  rounded-2xl
+  p-8
+  shadow-2xl
+"
+>
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-white">Edit Project</h2>
+          <h2 className="text-3xl font-bold text-black dark:text-white">Edit Project</h2>
 
           <button
             onClick={onClose}
-            className="text-zinc-400 hover:text-white text-xl"
+            className="
+text-zinc-500
+dark:text-zinc-400
+hover:text-black
+dark:hover:text-white
+text-xl
+transition-colors
+"
           >
             ✕
           </button>
@@ -75,38 +109,94 @@ export default function EditProjectModal({
 
         <form className="space-y-6">
           <div>
-            <label className="block text-white mb-2">
+            <label className="
+block
+text-black
+dark:text-white
+mb-2
+font-medium
+">
               Project Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white"
+              className="
+w-full
+px-4
+py-3
+rounded-xl
+bg-zinc-50
+dark:bg-zinc-950
+border
+border-zinc-200
+dark:border-zinc-700
+text-black
+dark:text-white
+focus:outline-none
+focus:ring-2
+focus:ring-green-500
+focus:border-green-500
+transition-all
+"
             />
           </div>
 
           <div>
-            <label className="block text-white mb-2">
-              Description <span className="text-red-500">*</span>
-            </label>
+            <label className="block text-black dark:text-white mb-2 font-medium">
+  Description <span className="text-red-500">*</span>
+</label>
 
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full h-32 bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white"
+              className="
+w-full
+h-32
+bg-zinc-100
+dark:bg-black
+border
+border-zinc-300
+dark:border-zinc-700
+rounded-xl
+px-4
+py-3
+text-black
+dark:text-white
+focus:outline-none
+focus:border-green-400
+transition-all
+"
             />
           </div>
 
           <div>
-            <label className="block text-white mb-2">
-              Tech Stack <span className="text-red-500">*</span>
-            </label>
+            <label className="block text-black dark:text-white mb-2 font-medium">
+  Tech Stack <span className="text-red-500">*</span>
+</label>
             <input
               type="text"
               value={techStack}
               onChange={(e) => setTechStack(e.target.value)}
-              className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white"
+              className="
+w-full
+px-4
+py-3
+rounded-xl
+bg-zinc-50
+dark:bg-zinc-950
+border
+border-zinc-200
+dark:border-zinc-700
+text-black
+dark:text-white
+focus:outline-none
+focus:ring-2
+focus:ring-green-500
+focus:border-green-500
+transition-all
+"
             />
           </div>
 
@@ -114,17 +204,57 @@ export default function EditProjectModal({
             type="text"
             value={githubUrl}
             onChange={(e) => setGithubUrl(e.target.value)}
-            className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white"
+            className="
+w-full
+px-4
+py-3
+rounded-xl
+bg-zinc-50
+dark:bg-zinc-950
+border
+border-zinc-200
+dark:border-zinc-700
+text-black
+dark:text-white
+focus:outline-none
+focus:ring-2
+focus:ring-green-500
+focus:border-green-500
+transition-all
+"
           />
 
           <input
             type="text"
             value={liveUrl}
             onChange={(e) => setLiveUrl(e.target.value)}
-            className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white"
+           className="
+w-full
+px-4
+py-3
+rounded-xl
+bg-zinc-50
+dark:bg-zinc-950
+border
+border-zinc-200
+dark:border-zinc-700
+text-black
+dark:text-white
+focus:outline-none
+focus:ring-2
+focus:ring-green-500
+focus:border-green-500
+transition-all
+"
           />
 
-          <label className="flex items-center gap-3 text-white">
+          <label className="
+flex
+items-center
+gap-3
+text-black
+dark:text-white
+">
             <input
               type="checkbox"
               checked={featured}
@@ -133,11 +263,22 @@ export default function EditProjectModal({
             Featured Project
           </label>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 pt-4">
             <button
               type="button"
               onClick={handleSave}
-              className="bg-green-500 hover:bg-green-400 transition-all px-6 py-3 rounded-xl text-black font-semibold"
+              className="
+px-6
+py-3
+rounded-xl
+bg-green-500
+hover:bg-green-400
+text-black
+font-semibold
+shadow-lg
+shadow-green-500/20
+transition-all
+"
             >
               Save Changes
             </button>
@@ -145,7 +286,22 @@ export default function EditProjectModal({
             <button
               type="button"
               onClick={onClose}
-              className="bg-zinc-700 hover:bg-zinc-600 transition-all px-6 py-3 rounded-xl text-white font-semibold"
+              className="
+px-6
+py-3
+rounded-xl
+bg-zinc-100
+dark:bg-zinc-800
+border
+border-zinc-300
+dark:border-zinc-700
+text-black
+dark:text-white
+font-semibold
+hover:bg-zinc-200
+dark:hover:bg-zinc-700
+transition-all
+"
             >
               Cancel
             </button>
