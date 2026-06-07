@@ -121,16 +121,17 @@ export default function AdminLoginPage() {
           </div>
           <div className="flex justify-end -mt-2">
   <button
-    type="button"
-    className="
-      text-sm
-      text-emerald-600
-      hover:text-emerald-500
-      transition-colors
-    "
-  >
-    Forgot Password?
-  </button>
+  type="button"
+  onClick={() => router.push("/admin/forgot-password")}
+  className="
+    text-sm
+    text-emerald-600
+    hover:text-emerald-500
+    transition-colors
+  "
+>
+  Forgot Password?
+</button>
 </div>
 
 {error && (
@@ -138,7 +139,7 @@ export default function AdminLoginPage() {
     {error}
   </p>
 )}
-          {error && <p className="text-red-400">{error}</p>}
+          
 
           <button
             type="submit"
