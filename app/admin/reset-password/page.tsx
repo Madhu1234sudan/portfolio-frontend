@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,12 +9,29 @@ import api from "@/src/lib/api";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
+ 
 
-  const [token, setToken] = useState("");
+ const [token, setToken] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  if (
+  typeof window !== "undefined" &&
+  !token
+) {
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const urlToken =
+    params.get("token") || "";
+
+  if (urlToken) {
+    setToken(urlToken);
+  }
+}
+  
 
   const handleReset = async (
     e: React.FormEvent
@@ -32,7 +50,7 @@ export default function ResetPasswordPage() {
       setMessage(response.data.message);
       setError("");
 
-    } catch (error) {
+    } catch {
       setError(
         "Invalid or expired reset token"
       );
@@ -66,36 +84,14 @@ export default function ResetPasswordPage() {
         </h1>
 
         <p className="text-zinc-500 mb-8">
-          Enter your reset token and new password.
+          Enter your new password.
         </p>
 
         <form
           onSubmit={handleReset}
           className="space-y-6"
         >
-          <textarea
-            placeholder="Paste reset token"
-            value={token}
-            onChange={(e) =>
-              setToken(e.target.value)
-            }
-            className="
-              w-full
-              h-32
-              bg-zinc-50
-              dark:bg-black
-              border
-              border-zinc-300
-              dark:border-zinc-700
-              rounded-xl
-              px-4
-              py-4
-              text-black
-              dark:text-white
-              focus:outline-none
-              focus:border-green-400
-            "
-          />
+          
 
           <input
             type="password"
