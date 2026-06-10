@@ -50,11 +50,44 @@ export default function Projects() {
             >
 
               {/* IMAGE PLACEHOLDER */}
-              <div className="h-56 bg-gradient-to-br from-green-500/10 via-blue-500/10 to-zinc-900 flex items-center justify-center">
-                <h3 className="text-5xl font-black text-green-400 opacity-30">
-                  AI
-                </h3>
-              </div>
+             {/* PROJECT IMAGE */}
+<div className="h-56 overflow-hidden">
+  {project.imageUrl ? (
+    <img
+      src={project.imageUrl}
+      alt={project.title}
+      className="
+      w-full
+      h-full
+      object-cover
+      "
+    />
+  ) : (
+    <div
+      className="
+      h-full
+      bg-gradient-to-br
+      from-green-500/10
+      via-blue-500/10
+      to-zinc-900
+      flex
+      items-center
+      justify-center
+      "
+    >
+      <h3
+        className="
+        text-5xl
+        font-black
+        text-green-400
+        opacity-30
+        "
+      >
+        AI
+      </h3>
+    </div>
+  )}
+</div>
 
               {/* CONTENT */}
               <div className="p-8">

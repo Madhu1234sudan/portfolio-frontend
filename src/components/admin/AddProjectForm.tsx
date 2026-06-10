@@ -22,12 +22,49 @@ export default function AddProjectForm({ setProjects }: AddProjectFormProps) {
 
   const [featured, setFeatured] = useState(false);
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const [imageUrl, setImageUrl] = useState("");
+
+  const [uploadingImage, setUploadingImage] =
+    useState(false);
+
   const [success, setSuccess] = useState("");
 
   const [error, setError] = useState("");
+const uploadImage = async () => {
+  if (!imageFile) {
+    return "";
+  }
 
+  try {
+    setUploadingImage(true);
+
+    const formData = new FormData();
+
+    formData.append("image", imageFile);
+
+    const response = await api.post(
+      "/upload/image",
+      formData,
+      {
+        headers: {
+          "Content-Type":
+            "multipart/form-data",
+        },
+      }
+    );
+
+    setImageUrl(response.data.imageUrl);
+
+    return response.data.imageUrl;
+  } finally {
+    setUploadingImage(false);
+  }
+};
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
 
     if (!title.trim() || !description.trim() || !techStack.trim()) {
       setError("Please fill all required fields.");
@@ -37,7 +74,12 @@ export default function AddProjectForm({ setProjects }: AddProjectFormProps) {
 
     setError("");
     setSuccess("");
-
+const uploadedImageUrl =
+  await uploadImage();
+  console.log(
+  "Uploaded URL:",
+  uploadedImageUrl
+);
     try {
       const token = sessionStorage.getItem("adminToken");
 
@@ -51,6 +93,7 @@ export default function AddProjectForm({ setProjects }: AddProjectFormProps) {
 
           githubUrl,
           liveUrl,
+          imageUrl: uploadedImageUrl,
           featured,
         },
         {
@@ -81,23 +124,23 @@ export default function AddProjectForm({ setProjects }: AddProjectFormProps) {
   return (
     <div
       className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-8
-shadow-sm
-transition-colors
-">
-<h2 className="
-text-3xl
-font-bold
-text-black
-dark:text-white
-mb-8
-">Add New AI Project</h2>
+                    bg-white
+                    dark:bg-zinc-900
+                    border
+                    border-zinc-300
+                    dark:border-zinc-800
+                    rounded-2xl
+                    p-8
+                    shadow-sm
+                    transition-colors
+                    ">
+                      <h2 className="
+                      text-3xl
+                      font-bold
+                      text-black
+                      dark:text-white
+                      mb-8
+                      ">Add New AI Project</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
@@ -107,23 +150,23 @@ mb-8
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="
-w-full
-bg-zinc-100
-dark:bg-black
-border
-border-zinc-300
-dark:border-zinc-700
-rounded-xl
-px-4
-py-3
-text-black
-dark:text-white
-placeholder:text-zinc-500
-focus:outline-none
-focus:border-green-400
-transition-all
-"
-          />
+                        w-full
+                        bg-zinc-100
+                        dark:bg-black
+                        border
+                        border-zinc-300
+                        dark:border-zinc-700
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-black
+                        dark:text-white
+                        placeholder:text-zinc-500
+                        focus:outline-none
+                        focus:border-green-400
+                        transition-all
+                        "
+                                  />
         </div>
 
         <div>
@@ -132,24 +175,24 @@ transition-all
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="
-w-full
-h-32
-bg-zinc-100
-dark:bg-black
-border
-border-zinc-300
-dark:border-zinc-700
-rounded-xl
-px-4
-py-3
-text-black
-dark:text-white
-placeholder:text-zinc-500
-focus:outline-none
-focus:border-green-400
-transition-all
-"
-          />
+                            w-full
+                            h-32
+                            bg-zinc-100
+                            dark:bg-black
+                            border
+                            border-zinc-300
+                            dark:border-zinc-700
+                            rounded-xl
+                            px-4
+                            py-3
+                            text-black
+                            dark:text-white
+                            placeholder:text-zinc-500
+                            focus:outline-none
+                            focus:border-green-400
+                            transition-all
+                            "
+                                      />
         </div>
 
         <div>
@@ -159,23 +202,23 @@ transition-all
             value={techStack}
             onChange={(e) => setTechStack(e.target.value)}
            className="
-w-full
-h-32
-bg-zinc-100
-dark:bg-black
-border
-border-zinc-300
-dark:border-zinc-700
-rounded-xl
-px-4
-py-3
-text-black
-dark:text-white
-placeholder:text-zinc-500
-focus:outline-none
-focus:border-green-400
-transition-all
-"
+                          w-full
+                          h-32
+                          bg-zinc-100
+                          dark:bg-black
+                          border
+                          border-zinc-300
+                          dark:border-zinc-700
+                          rounded-xl
+                          px-4
+                          py-3
+                          text-black
+                          dark:text-white
+                          placeholder:text-zinc-500
+                          focus:outline-none
+                          focus:border-green-400
+                          transition-all
+                          "
           />
         </div>
 
@@ -186,24 +229,24 @@ transition-all
             value={githubUrl}
             onChange={(e) => setGithubUrl(e.target.value)}
             className="
-w-full
-h-32
-bg-zinc-100
-dark:bg-black
-border
-border-zinc-300
-dark:border-zinc-700
-rounded-xl
-px-4
-py-3
-text-black
-dark:text-white
-placeholder:text-zinc-500
-focus:outline-none
-focus:border-green-400
-transition-all
-"
-          />
+                            w-full
+                            h-32
+                            bg-zinc-100
+                            dark:bg-black
+                            border
+                            border-zinc-300
+                            dark:border-zinc-700
+                            rounded-xl
+                            px-4
+                            py-3
+                            text-black
+                            dark:text-white
+                            placeholder:text-zinc-500
+                            focus:outline-none
+                            focus:border-green-400
+                            transition-all
+                            "
+                                      />
         </div>
 
         <div>
@@ -213,33 +256,69 @@ transition-all
             value={liveUrl}
             onChange={(e) => setLiveUrl(e.target.value)}
             className="
-w-full
-h-32
-bg-zinc-100
-dark:bg-black
-border
-border-zinc-300
-dark:border-zinc-700
-rounded-xl
-px-4
-py-3
-text-black
-dark:text-white
-placeholder:text-zinc-500
-focus:outline-none
-focus:border-green-400
-transition-all
-"
-          />
+                                w-full
+                                h-32
+                                bg-zinc-100
+                                dark:bg-black
+                                border
+                                border-zinc-300
+                                dark:border-zinc-700
+                                rounded-xl
+                                px-4
+                                py-3
+                                text-black
+                                dark:text-white
+                                placeholder:text-zinc-500
+                                focus:outline-none
+                                focus:border-green-400
+                                transition-all
+                                "
+                                          />
         </div>
+        <div>
+  <label
+    className="
+                  block
+                  mb-2
+                  text-black
+                  dark:text-white
+                  font-medium
+                  "
+                >
+    Project Image
+  </label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => {
+      if (e.target.files?.[0]) {
+        setImageFile(e.target.files[0]);
+      }
+    }}
+    className="
+                    w-full
+                    bg-zinc-100
+                    dark:bg-black
+                    border
+                    border-zinc-300
+                    dark:border-zinc-700
+                    rounded-xl
+                    px-4
+                    py-3
+                    text-black
+                    dark:text-white
+                    "
+                  />
+</div>
 
         <label className="
-flex
-items-center
-gap-3
-text-black
-dark:text-white
-">
+                              flex
+                              items-center
+                              gap-3
+                              text-black
+                              dark:text-white
+                              ">
           <input
             type="checkbox"
             checked={featured}
@@ -255,22 +334,23 @@ dark:text-white
         <button
           type="submit"
           className="
-bg-green-500
-hover:bg-green-400
-hover:scale-105
-transition-all
-px-6
-py-3
-rounded-xl
-text-black
-font-semibold
-shadow-lg
-shadow-green-500/20
-"
-        >
+                        bg-green-500
+                        hover:bg-green-400
+                        hover:scale-105
+                        transition-all
+                        px-6
+                        py-3
+                        rounded-xl
+                        text-black
+                        font-semibold
+                        shadow-lg
+                        shadow-green-500/20
+                        "
+                                >
           Create Project
         </button>
       </form>
+      
     </div>
   );
 }
