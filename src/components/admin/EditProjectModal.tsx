@@ -29,8 +29,46 @@ export default function EditProjectModal({
   const [liveUrl, setLiveUrl] = useState(project.liveUrl || "");
 
   const [featured, setFeatured] = useState(project.featured);
+  const [imageFile, setImageFile] =
+  useState<File | null>(null);
+
+const [imageUrl, setImageUrl] =
+  useState(project.imageUrl || "");
+
+const [uploadingImage, setUploadingImage] =
+  useState(false);
+  const uploadImage = async () => {
+  if (!imageFile) {
+    return imageUrl;
+  }
+
+  try {
+    setUploadingImage(true);
+
+    const formData = new FormData();
+
+    formData.append("image", imageFile);
+
+    const response = await api.post(
+      "/upload/image",
+      formData,
+      {
+        headers: {
+          "Content-Type":
+            "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data.imageUrl;
+  } finally {
+    setUploadingImage(false);
+  }
+};
   const handleSave = async () => {
     try {
+      const updatedImageUrl =
+      await uploadImage();
       const token = sessionStorage.getItem("adminToken");
 
       const response = await api.put(
@@ -43,6 +81,7 @@ export default function EditProjectModal({
 
           githubUrl,
           liveUrl,
+          imageUrl: updatedImageUrl,
           featured,
         },
         {
@@ -247,6 +286,44 @@ focus:border-green-500
 transition-all
 "
           />
+          <div>
+  <label
+    className="
+    block
+    text-black
+    dark:text-white
+    mb-2
+    font-medium
+    "
+  >
+    Project Image
+  </label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => {
+      if (e.target.files?.[0]) {
+        setImageFile(
+          e.target.files[0]
+        );
+      }
+    }}
+    className="
+    w-full
+    px-4
+    py-3
+    rounded-xl
+    bg-zinc-50
+    dark:bg-zinc-950
+    border
+    border-zinc-200
+    dark:border-zinc-700
+    text-black
+    dark:text-white
+    "
+  />
+</div>
 
           <label className="
 flex
