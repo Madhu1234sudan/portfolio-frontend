@@ -101,6 +101,9 @@ export default function ProjectTable({
         <table className="w-full">
           <thead className="bg-zinc-100 dark:bg-black">
             <tr>
+            <th className="text-left p-5 text-zinc-600 dark:text-zinc-400">
+              Image
+            </th>
               <th className="text-left p-5 text-zinc-600 dark:text-zinc-400">
                 Project
               </th>
@@ -132,6 +135,40 @@ export default function ProjectTable({
   transition-all
 "
               >
+              <td className="p-5">
+  {project.imageUrl ? (
+    <img
+      src={project.imageUrl}
+      alt={project.title}
+      className="
+      h-16
+      w-16
+      object-cover
+      rounded-xl
+      border
+      border-zinc-300
+      dark:border-zinc-700
+      "
+    />
+  ) : (
+    <div
+      className="
+      h-16
+      w-16
+      rounded-xl
+      bg-zinc-200
+      dark:bg-zinc-800
+      flex
+      items-center
+      justify-center
+      text-xs
+      text-zinc-500
+      "
+    >
+      No Img
+    </div>
+  )}
+</td>
                 <td className="p-5 text-black dark:text-white font-medium">{project.title}</td>
 
                 <td className="p-5 text-zinc-600 dark:text-zinc-400">

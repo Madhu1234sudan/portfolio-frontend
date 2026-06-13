@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Mail, ArrowLeft } from "lucide-react";
 
 import api from "@/src/lib/api";
+import LoadingButton from "@/src/components/ui/LoadingButton";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -14,12 +15,13 @@ export default function ForgotPasswordPage() {
   const [message, setMessage] = useState("");
   const [resetToken, setResetToken] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (
     e: React.FormEvent
   ) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const response = await api.post(
         "/auth/forgot-password",
@@ -36,6 +38,9 @@ export default function ForgotPasswordPage() {
       setError("Failed to generate reset token");
       setMessage("");
     }
+    finally {
+  setLoading(false);
+      }
   };
 
   return (
@@ -114,20 +119,21 @@ export default function ForgotPasswordPage() {
             </p>
           )}
 
-          <button
-            type="submit"
-            className="
-              w-full
-              bg-green-500
-              hover:bg-green-400
-              py-4
-              rounded-xl
-              font-bold
-              text-black
-            "
-          >
-            Send Reset Request
-          </button>
+          <LoadingButton
+  type="submit"
+  loading={loading}
+  className="
+    w-full
+    bg-green-500
+    hover:bg-green-400
+    py-4
+    rounded-xl
+    font-bold
+    text-black
+  "
+>
+  Send Reset Request
+</LoadingButton>
         </form>
       </div>
     </main>

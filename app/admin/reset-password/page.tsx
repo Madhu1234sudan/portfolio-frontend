@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { KeyRound, ArrowLeft } from "lucide-react";
 
 import api from "@/src/lib/api";
+import LoadingButton from "@/src/components/ui/LoadingButton";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -16,6 +17,8 @@ export default function ResetPasswordPage() {
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   if (
   typeof window !== "undefined" &&
   !token
@@ -37,6 +40,7 @@ export default function ResetPasswordPage() {
     e: React.FormEvent
   ) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await api.post(
@@ -57,6 +61,9 @@ export default function ResetPasswordPage() {
 
       setMessage("");
     }
+    finally {
+  setLoading(false);
+      }
   };
 
   return (
@@ -129,20 +136,21 @@ export default function ResetPasswordPage() {
             </p>
           )}
 
-          <button
-            type="submit"
-            className="
-              w-full
-              bg-green-500
-              hover:bg-green-400
-              py-4
-              rounded-xl
-              font-bold
-              text-black
-            "
-          >
-            Reset Password
-          </button>
+          <LoadingButton
+  type="submit"
+  loading={loading}
+  className="
+    w-full
+    bg-green-500
+    hover:bg-green-400
+    py-4
+    rounded-xl
+    font-bold
+    text-black
+  "
+>
+  Reset Password
+</LoadingButton>
         </form>
 
       </div>

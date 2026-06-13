@@ -1,5 +1,6 @@
 "use client";
-
+import LoadingButton from "../ui/LoadingButton";
+import Image from "next/image";
 import { useState } from "react";
 
 import api from "../../lib/api";
@@ -310,8 +311,27 @@ const uploadedImageUrl =
                     dark:text-white
                     "
                   />
+                  
 </div>
-
+ {imageFile && (
+  <div className="mt-4">
+    <Image
+  src={URL.createObjectURL(imageFile)}
+  alt="Preview"
+  width={600}
+  height={160}
+  className="
+  h-40
+  w-full
+  object-cover
+  rounded-xl
+  border
+  border-zinc-300
+  dark:border-zinc-700
+  "
+/>
+  </div>
+)}
         <label className="
                               flex
                               items-center
@@ -331,24 +351,25 @@ const uploadedImageUrl =
 
         {success && <p className="text-green-400">{success}</p>}
 
-        <button
-          type="submit"
-          className="
-                        bg-green-500
-                        hover:bg-green-400
-                        hover:scale-105
-                        transition-all
-                        px-6
-                        py-3
-                        rounded-xl
-                        text-black
-                        font-semibold
-                        shadow-lg
-                        shadow-green-500/20
-                        "
-                                >
-          Create Project
-        </button>
+        <LoadingButton
+  type="submit"
+  loading={uploadingImage}
+  className="
+  bg-green-500
+  hover:bg-green-400
+  hover:scale-105
+  transition-all
+  px-6
+  py-3
+  rounded-xl
+  text-black
+  font-semibold
+  shadow-lg
+  shadow-green-500/20
+  "
+>
+  Create Project
+</LoadingButton>
       </form>
       
     </div>

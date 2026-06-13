@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
 
 import api from "../../../src/lib/api";
+import LoadingButton from "@/src/components/ui/LoadingButton";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -13,9 +14,12 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await api.post("/auth/login", {
@@ -28,6 +32,9 @@ export default function AdminLoginPage() {
       router.push("/admin");
     } catch (error) {
       setError("Invalid credentials");
+    }
+    finally {
+  setLoading(false);
     }
   };
 
@@ -141,25 +148,26 @@ export default function AdminLoginPage() {
 )}
           
 
-          <button
-            type="submit"
-            className="
-            w-full
-            bg-emerald-500
-            hover:bg-emerald-400
-            hover:scale-[1.02]
-            transition-all
-            duration-200
-            py-4
-            rounded-xl
-            text-black
-            font-bold
-            shadow-lg
-            shadow-green-500/20
-            "
-          >
-            Login
-          </button>
+          <LoadingButton
+  type="submit"
+  loading={loading}
+  className="
+    w-full
+    bg-emerald-500
+    hover:bg-emerald-400
+    hover:scale-[1.02]
+    transition-all
+    duration-200
+    py-4
+    rounded-xl
+    text-black
+    font-bold
+    shadow-lg
+    shadow-green-500/20
+  "
+>
+  Login
+</LoadingButton>
 
           <p className="text-center text-zinc-500 text-sm pt-2">
             Madhusudan`s Data Science Portfolio

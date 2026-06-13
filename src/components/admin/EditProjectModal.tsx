@@ -1,5 +1,6 @@
 "use client";
-
+import LoadingButton from "../ui/LoadingButton";
+import Image from "next/image";
 import { useState } from "react";
 import api from "@/src/lib/api";
 
@@ -324,7 +325,25 @@ transition-all
     "
   />
 </div>
-
+{imageFile && (
+  <div className="mt-4">
+    <Image
+  src={URL.createObjectURL(imageFile)}
+  alt="Preview"
+  width={600}
+  height={160}
+  className="
+  h-40
+  w-full
+  object-cover
+  rounded-xl
+  border
+  border-zinc-300
+  dark:border-zinc-700
+  "
+/>
+  </div>
+)}
           <label className="
 flex
 items-center
@@ -341,25 +360,25 @@ dark:text-white
           </label>
 
           <div className="flex gap-4 pt-4">
-            <button
-              type="button"
-              onClick={handleSave}
-              className="
-px-6
-py-3
-rounded-xl
-bg-green-500
-hover:bg-green-400
-text-black
-font-semibold
-shadow-lg
-shadow-green-500/20
-transition-all
-"
-            >
-              Save Changes
-            </button>
-
+            <LoadingButton
+  type="button"
+  onClick={handleSave}
+  loading={uploadingImage}
+  className="
+  px-6
+  py-3
+  rounded-xl
+  bg-green-500
+  hover:bg-green-400
+  text-black
+  font-semibold
+  shadow-lg
+  shadow-green-500/20
+  transition-all
+  "
+>
+  Save Changes
+</LoadingButton>
             <button
               type="button"
               onClick={onClose}
