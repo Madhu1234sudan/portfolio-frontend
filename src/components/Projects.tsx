@@ -26,7 +26,10 @@ export default function Projects() {
   }, []);
 
   return (
-    <section className="bg-zinc-950 text-white py-24 px-8">
+    <section
+  id="projects"
+  className="bg-zinc-950 text-white py-24 px-8"
+>
       <div className="max-w-7xl mx-auto">
 
         {/* HEADER */}

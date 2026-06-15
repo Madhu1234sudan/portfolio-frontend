@@ -12,6 +12,9 @@ import ProjectTable from "../../src/components/admin/ProjectTable";
 import AddProjectForm from "../../src/components/admin/AddProjectForm";
 import api from "../../src/lib/api";
 import { Project } from "../../src/types/project";
+import { Research } from "../../src/types/research";
+import ResearchTable from "../../src/components/admin/ResearchTable";
+import AddResearchForm from "../../src/components/admin/AddResearchForm";
 
 interface DecodedToken {
   exp: number;
@@ -22,6 +25,7 @@ export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [projects, setProjects] = useState<Project[]>([]);
+  const [research, setResearch] =useState<Research[]>([]);
 
   useEffect(() => {
     const token = sessionStorage.getItem("adminToken");
@@ -42,16 +46,31 @@ export default function AdminPage() {
         router.push("/admin/login");
       }
       const fetchProjects = async () => {
-        try {
-          const response = await api.get("/projects");
+  try {
+    const response = await api.get(
+      "/projects"
+    );
 
-          setProjects(response.data);
-        } catch (error) {
-          console.error(error);
-        }
-      };
+    setProjects(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-      fetchProjects();
+const fetchResearch = async () => {
+  try {
+    const response = await api.get(
+      "/research"
+    );
+
+    setResearch(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+fetchProjects();
+fetchResearch();
     } catch {
       sessionStorage.removeItem("adminToken");
 
@@ -396,6 +415,17 @@ duration-300
 )}
 
           {activeSection === "AI Research" && (
+  <div className="space-y-8">
+    <AddResearchForm
+      setResearch={setResearch}
+    />
+
+    <ResearchTable
+      research={research}
+      setResearch={setResearch}
+    />
+  </div>
+)}
             <div className="
 bg-white
 dark:bg-zinc-900
@@ -409,11 +439,9 @@ p-6
                 AI Research
               </h2>
 
-              <p className="text-zinc-400">
-                Research management module coming soon.
-              </p>
+              
             </div>
-          )}
+
 
           {activeSection === "Analytics" && (
             <div className="space-y-8">

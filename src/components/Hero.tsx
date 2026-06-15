@@ -1,3 +1,4 @@
+"use client";
 export default function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center bg-black text-white px-8">
@@ -25,9 +26,27 @@ export default function Hero() {
           </p>
 
           <div className="flex gap-4 flex-wrap">
-            <button className="bg-green-500 hover:bg-green-400 transition-all px-6 py-3 rounded-xl text-black font-semibold">
-              Explore Projects
-            </button>
+            <button
+  onClick={() =>
+    document
+      .getElementById("projects")
+      ?.scrollIntoView({
+        behavior: "smooth",
+      })
+  }
+  className="
+  bg-green-500
+  hover:bg-green-400
+  transition-all
+  px-6
+  py-3
+  rounded-xl
+  text-black
+  font-semibold
+  "
+>
+  Explore Projects
+</button>
 
             <button className="border border-gray-700 hover:border-green-400 transition-all px-6 py-3 rounded-xl">
               View Research
