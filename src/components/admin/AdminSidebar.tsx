@@ -3,6 +3,7 @@ import {
   FolderKanban,
   BrainCircuit,
   BarChart3,
+  UserCog,
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -17,6 +18,10 @@ const menuItems = [
     name: "Dashboard",
     icon: LayoutDashboard,
   },
+  {
+  name: "Profile Management",
+  icon: UserCog,
+},
   {
     name: "Projects",
     icon: FolderKanban,

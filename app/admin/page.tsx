@@ -15,6 +15,7 @@ import { Project } from "../../src/types/project";
 import { Research } from "../../src/types/research";
 import ResearchTable from "../../src/components/admin/ResearchTable";
 import AddResearchForm from "../../src/components/admin/AddResearchForm";
+import ProfileManagement from "@/src/components/admin/ProfileManagement";
 
 interface DecodedToken {
   exp: number;
@@ -406,7 +407,9 @@ duration-300
     setProjects={setProjects}
   />
 )}
-
+{activeSection === "Profile Management" && (
+  <ProfileManagement />
+)}
 {activeSection === "Projects" && (
   <ProjectTable
     projects={projects}

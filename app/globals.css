@@ -34,6 +34,8 @@ html {
 }
 button,
 a,
+input[type="file"],
+input[type="checkbox"]
 [role="button"] {
   cursor: pointer !important;
 }

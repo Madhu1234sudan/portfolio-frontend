@@ -1,4 +1,17 @@
+"use client";
+
+import useProfile from "@/src/hooks/useProfile";
+
 export default function About() {
+  const { profile, loading } =
+    useProfile();
+
+  if (loading) {
+    return (
+      <section className="bg-zinc-950 min-h-[400px]" />
+    );
+  }
+
   return (
     <section className="bg-zinc-950 text-white py-24 px-8">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
@@ -10,27 +23,11 @@ export default function About() {
           </p>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
-            Solving Problems with
-            AI & Data Intelligence
+            {profile?.headline}
           </h2>
 
-          <p className="text-gray-400 leading-8 mb-6">
-            I specialize in Data Science, Machine Learning,
-            NLP systems, and AI-powered analytics solutions
-            that transform raw data into actionable insights.
-          </p>
-
-          <p className="text-gray-400 leading-8 mb-6">
-            My work focuses on practical machine learning
-            implementation including Active Learning,
-            Spam Detection, NLP pipelines, SQL analytics,
-            and intelligent data-driven applications.
-          </p>
-
-          <p className="text-gray-400 leading-8">
-            I aim to build scalable AI systems that combine
-            predictive intelligence, analytics, and modern
-            engineering practices to solve real-world challenges.
+          <p className="text-gray-400 leading-8 whitespace-pre-line">
+            {profile?.aboutMe}
           </p>
         </div>
 

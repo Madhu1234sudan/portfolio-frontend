@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-// import ResearchModal from "./EditResearchModal";
+import ResearchModal from "./EditResearchModal";
+import EditResearchModal from "./EditResearchModal";
 import api from "../../lib/api";
 import { Research } from "../../types/research";
 interface ResearchTableProps {
@@ -26,6 +27,9 @@ export default function ResearchTable({
   .toLowerCase()
   .includes(searchTerm.toLowerCase())
   );
+  const [selectedResearch,
+  setSelectedResearch] =
+  useState<Research | null>(null);
 
   const handleDelete = async (id: number) => {
     const confirmDelete = window.confirm(
@@ -153,17 +157,22 @@ export default function ResearchTable({
 
                 <td className="p-5 flex gap-3">
                   <button
-  disabled
+  onClick={() =>
+    setSelectedResearch(research)
+  }
   className="
-px-4
-py-2
-rounded-xl
-bg-zinc-500/10
-text-zinc-500
-cursor-not-allowed
-"
+  px-4
+  py-2
+  rounded-xl
+  bg-blue-500/10
+  text-blue-500
+  border
+  border-blue-500/20
+  hover:bg-blue-500/20
+  transition-all
+  "
 >
-  Coming Soon
+  Edit
 </button>
                    
 
@@ -190,7 +199,24 @@ transition-all
         </table>
       </div>
 
-      
+      {selectedResearch && (
+  <EditResearchModal
+    research={selectedResearch}
+    onClose={() =>
+      setSelectedResearch(null)
+    }
+    onUpdate={(updatedResearch) =>
+      setResearch((prev) =>
+        prev.map((research) =>
+          research.id ===
+          updatedResearch.id
+            ? updatedResearch
+            : research
+        )
+      )
+    }
+  />
+)}
     </div>
   );
 }
