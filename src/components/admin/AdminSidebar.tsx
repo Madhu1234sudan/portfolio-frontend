@@ -3,8 +3,10 @@ import {
   FolderKanban,
   BrainCircuit,
   BarChart3,
+  Code2,
   UserCog,
 } from "lucide-react";
+
 
 interface AdminSidebarProps {
   sidebarOpen: boolean;
@@ -30,6 +32,10 @@ const menuItems = [
     name: "AI Research",
     icon: BrainCircuit,
   },
+  {
+  name: "Skills",
+  icon: Code2,
+},
   {
     name: "Analytics",
     icon: BarChart3,

@@ -16,6 +16,10 @@ import { Research } from "../../src/types/research";
 import ResearchTable from "../../src/components/admin/ResearchTable";
 import AddResearchForm from "../../src/components/admin/AddResearchForm";
 import ProfileManagement from "@/src/components/admin/ProfileManagement";
+import { SkillCategory } from "../../src/types/skillCategory";
+import { Skill } from "../../src/types/skill";
+import AddSkillCategoryForm from "@/src/components/admin/AddSkillCategoryForm";
+
 
 interface DecodedToken {
   exp: number;
@@ -24,13 +28,16 @@ interface DecodedToken {
 export default function AdminPage() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("Dashboard");
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [research, setResearch] =useState<Research[]>([]);
+  const [activeSection, setActiveSection] =  useState("Dashboard");
+  const [projects, setProjects] =  useState<Project[]>([]);
+  const [research, setResearch] =  useState<Research[]>([]);
+  const [skillCategories, setSkillCategories] =  useState<SkillCategory[]>([]);
+  const [skills, setSkills] =  useState<Skill[]>([]);
 
+  
   useEffect(() => {
     const token = sessionStorage.getItem("adminToken");
-
+    
     if (!token) {
       router.push("/admin/login");
       return;
@@ -47,6 +54,7 @@ export default function AdminPage() {
         router.push("/admin/login");
       }
       const fetchProjects = async () => {
+  
   try {
     const response = await api.get(
       "/projects"
@@ -57,7 +65,17 @@ export default function AdminPage() {
     console.error(error);
   }
 };
+const fetchSkillCategories = async () => {
+  try {
+    const response =
+      await api.get("/skill-categories");
 
+    setSkillCategories(response.data);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 const fetchResearch = async () => {
   try {
     const response = await api.get(
@@ -72,6 +90,7 @@ const fetchResearch = async () => {
 
 fetchProjects();
 fetchResearch();
+fetchSkillCategories();
     } catch {
       sessionStorage.removeItem("adminToken");
 
@@ -416,8 +435,16 @@ duration-300
     setProjects={setProjects}
   />
 )}
+{activeSection === "Skills" && (
+  <div className="space-y-8">
+    <AddSkillCategoryForm
+      setSkillCategories={setSkillCategories}
+    />
 
-          {activeSection === "AI Research" && (
+    {/* SkillCategoryTable will go here next */}
+  </div>
+)}
+{activeSection === "AI Research" && (
   <div className="space-y-8">
     <AddResearchForm
       setResearch={setResearch}
@@ -429,21 +456,7 @@ duration-300
     />
   </div>
 )}
-            <div className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-6
-">
-              <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
-                AI Research
-              </h2>
-
-              
-            </div>
+          
 
 
           {activeSection === "Analytics" && (
