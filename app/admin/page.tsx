@@ -19,6 +19,8 @@ import ProfileManagement from "@/src/components/admin/ProfileManagement";
 import { SkillCategory } from "../../src/types/skillCategory";
 import { Skill } from "../../src/types/skill";
 import AddSkillCategoryForm from "@/src/components/admin/AddSkillCategoryForm";
+import SkillCategoryTable from "@/src/components/admin/SkillCategoryTable";
+import EditSkillCategoryModal from "@/src/components/admin/EditSkillCategoryModal";
 
 
 interface DecodedToken {
@@ -33,6 +35,8 @@ export default function AdminPage() {
   const [research, setResearch] =  useState<Research[]>([]);
   const [skillCategories, setSkillCategories] =  useState<SkillCategory[]>([]);
   const [skills, setSkills] =  useState<Skill[]>([]);
+  const [editingCategory, setEditingCategory] = useState<SkillCategory | null>(null);
+const [editCategoryOpen, setEditCategoryOpen] = useState(false);
 
   
   useEffect(() => {
@@ -436,13 +440,32 @@ duration-300
   />
 )}
 {activeSection === "Skills" && (
-  <div className="space-y-8">
-    <AddSkillCategoryForm
+  <>
+    <div className="space-y-8">
+
+      <AddSkillCategoryForm
+        setSkillCategories={setSkillCategories}
+      />
+
+      <SkillCategoryTable
+        skillCategories={skillCategories}
+        setSkillCategories={setSkillCategories}
+        setEditingCategory={setEditingCategory}
+        setEditCategoryOpen={setEditCategoryOpen}
+      />
+
+    </div>
+
+    <EditSkillCategoryModal
+      open={editCategoryOpen}
+      onClose={() => {
+        setEditCategoryOpen(false);
+        setEditingCategory(null);
+      }}
+      category={editingCategory}
       setSkillCategories={setSkillCategories}
     />
-
-    {/* SkillCategoryTable will go here next */}
-  </div>
+  </>
 )}
 {activeSection === "AI Research" && (
   <div className="space-y-8">

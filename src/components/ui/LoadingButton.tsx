@@ -1,15 +1,17 @@
 "use client";
 
 interface LoadingButtonProps {
-  loading: boolean;
   children: React.ReactNode;
-  type?: "button" | "submit" | "reset";
+  loading: boolean;
+  disabled?: boolean;
   onClick?: () => void;
   className?: string;
+  type?: "button" | "submit";
 }
 
 export default function LoadingButton({
   loading,
+  disabled = false,
   children,
   type = "button",
   onClick,
@@ -17,14 +19,18 @@ export default function LoadingButton({
 }: LoadingButtonProps) {
   return (
     <button
-      type={type}
-      onClick={onClick}
-      disabled={loading}
+  type={type}
+  onClick={onClick}
+  disabled={disabled || loading}
+
       className={`
-        ${className}
-        disabled:opacity-60
-        disabled:cursor-not-allowed
-      `}
+  ${className}
+  ${
+    disabled || loading
+      ? "opacity-60 cursor-not-allowed"
+      : ""
+  }
+`}
     >
       {loading ? (
         <span className="flex items-center justify-center gap-2">

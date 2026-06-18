@@ -861,45 +861,7 @@ setTimeout(() => {
           {/* RESUME */}
           {/* ========================= */}
 
-          {/* <section className="space-y-8">
-
-            <div className="border-b border-zinc-300 dark:border-zinc-700 pb-3">
-              <h3 className="text-2xl font-bold text-black dark:text-white">
-                Resume
-              </h3>
-            </div>
-
-            <div className="space-y-2">
-
-              <label className="font-semibold">
-                Resume URL
-              </label>
-
-              <input
-                type="text"
-                value={profile.resumeUrl || ""}
-                onChange={(e) =>
-                  setProfile({
-                    ...profile,
-                    resumeUrl: e.target.value,
-                  })
-                }
-                className="
-                w-full
-                rounded-xl
-                border
-                border-zinc-300
-                dark:border-zinc-700
-                bg-zinc-100
-                dark:bg-black
-                px-4
-                py-3
-                "
-              />
-
-            </div>
-
-          </section> */}
+          
 
           {/* ========================= */}
           {/* STATUS */}
