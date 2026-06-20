@@ -21,10 +21,32 @@ import { Skill } from "../../src/types/skill";
 import AddSkillCategoryForm from "@/src/components/admin/AddSkillCategoryForm";
 import SkillCategoryTable from "@/src/components/admin/SkillCategoryTable";
 import EditSkillCategoryModal from "@/src/components/admin/EditSkillCategoryModal";
+import AddSkillForm from "@/src/components/admin/AddSkillForm";
+import SkillTable from "@/src/components/admin/SkillTable";
+import EditSkillModal from "@/src/components/admin/EditSkillModal";
+import { Experience } from "@/src/types/experience";
+import AddExperienceForm from "@/src/components/admin/AddExperienceForm";
+import ExperienceTable from "@/src/components/admin/ExperienceTable";
+import EditExperienceModal from "@/src/components/admin/EditExperienceModal";
 
 
 interface DecodedToken {
   exp: number;
+}
+interface ExperienceTableProps {
+  experiences: Experience[];
+
+  setExperiences: React.Dispatch<
+    React.SetStateAction<Experience[]>
+  >;
+
+  setEditingExperience: React.Dispatch<
+    React.SetStateAction<Experience | null>
+  >;
+
+  setEditExperienceOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 }
 
 export default function AdminPage() {
@@ -36,7 +58,13 @@ export default function AdminPage() {
   const [skillCategories, setSkillCategories] =  useState<SkillCategory[]>([]);
   const [skills, setSkills] =  useState<Skill[]>([]);
   const [editingCategory, setEditingCategory] = useState<SkillCategory | null>(null);
-const [editCategoryOpen, setEditCategoryOpen] = useState(false);
+  const [editCategoryOpen, setEditCategoryOpen] = useState(false);
+  const [editingSkill, setEditingSkill] = useState<Skill | null>(null);
+  const [editSkillOpen, setEditSkillOpen] = useState(false);
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [editingExperience,setEditingExperience,] = useState<Experience | null>(null);
+  const [editExperienceOpen,setEditExperienceOpen,] = useState(false);
+  
 
   
   useEffect(() => {
@@ -80,6 +108,28 @@ const fetchSkillCategories = async () => {
     console.error(error);
   }
 };
+const fetchSkills = async () => {
+  try {
+    const response =
+      await api.get("/skills");
+
+    setSkills(response.data);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+const fetchExperiences = async () => {
+  try {
+    const response =
+      await api.get("/experience");
+
+    setExperiences(response.data);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 const fetchResearch = async () => {
   try {
     const response = await api.get(
@@ -91,10 +141,11 @@ const fetchResearch = async () => {
     console.error(error);
   }
 };
-
 fetchProjects();
 fetchResearch();
 fetchSkillCategories();
+fetchSkills();
+fetchExperiences();
     } catch {
       sessionStorage.removeItem("adminToken");
 
@@ -453,6 +504,18 @@ duration-300
         setEditingCategory={setEditingCategory}
         setEditCategoryOpen={setEditCategoryOpen}
       />
+      <AddSkillForm
+              skillCategories={
+                skillCategories
+              }
+              setSkills={setSkills}
+            />
+            <SkillTable
+              skills={skills}
+              setSkills={setSkills}
+              setEditingSkill={setEditingSkill}
+              setEditSkillOpen={setEditSkillOpen}
+            />
 
     </div>
 
@@ -465,6 +528,45 @@ duration-300
       category={editingCategory}
       setSkillCategories={setSkillCategories}
     />
+    <EditSkillModal
+  open={editSkillOpen}
+  onClose={() => {
+    setEditSkillOpen(false);
+    setEditingSkill(null);
+  }}
+  skill={editingSkill}
+  skillCategories={skillCategories}
+  setSkills={setSkills}
+/>
+  </>
+)}
+{activeSection === "Experience" && (
+  <>
+    <div className="space-y-8">
+
+      <AddExperienceForm
+        setExperiences={setExperiences}
+      />
+
+      <ExperienceTable
+        experiences={experiences}
+        setExperiences={setExperiences}
+        setEditingExperience={setEditingExperience}
+        setEditExperienceOpen={setEditExperienceOpen}
+      />
+
+    </div>
+
+    <EditExperienceModal
+      open={editExperienceOpen}
+      onClose={() => {
+        setEditExperienceOpen(false);
+        setEditingExperience(null);
+      }}
+      experience={editingExperience}
+      setExperiences={setExperiences}
+    />
+
   </>
 )}
 {activeSection === "AI Research" && (

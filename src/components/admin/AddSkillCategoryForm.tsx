@@ -34,7 +34,9 @@ export default function AddSkillCategoryForm({
     if (!title.trim()) {
       setError(
         "Please enter a category title."
-      );
+      );setTimeout(() => {
+  setError("");
+}, 3000);
       return;
     }
 

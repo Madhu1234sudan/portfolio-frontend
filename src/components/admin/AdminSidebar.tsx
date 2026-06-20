@@ -5,6 +5,7 @@ import {
   BarChart3,
   Code2,
   UserCog,
+  Briefcase,
 } from "lucide-react";
 
 
@@ -35,6 +36,10 @@ const menuItems = [
   {
   name: "Skills",
   icon: Code2,
+},
+{
+  name: "Experience",
+  icon: Briefcase,
 },
   {
     name: "Analytics",
