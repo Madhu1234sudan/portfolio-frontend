@@ -28,6 +28,12 @@ import { Experience } from "@/src/types/experience";
 import AddExperienceForm from "@/src/components/admin/AddExperienceForm";
 import ExperienceTable from "@/src/components/admin/ExperienceTable";
 import EditExperienceModal from "@/src/components/admin/EditExperienceModal";
+import {
+  DashboardHero,
+  DashboardStatistics,
+  RecentProjects,
+} from "@/src/components/admin/dashboard";
+
 
 
 interface DecodedToken {
@@ -224,255 +230,24 @@ transition-colors
         <div className="p-8 space-y-8">
           {activeSection === "Dashboard" && (
             <div className="space-y-8">
+              
               {/* Dashboard Hero */}
-              <div
-  className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-6
-"
->
-                <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
-                  Dashboard Overview
-                </h2>
-
-                <div className="flex gap-4 mt-4">
-                  <button
-                    onClick={() => setActiveSection("AddProject")}
-                    className="bg-green-500 hover:bg-green-400 transition-all px-5 py-3 rounded-xl text-black font-semibold"
-                  >
-                    + Add New Project
-                  </button>
-
-                  <button
-                    onClick={() => setActiveSection("Projects")}
-                    className="
-bg-blue-500
-hover:bg-blue-400
-hover:scale-105
-transition-all
-px-5
-py-3
-rounded-xl
-text-white
-font-semibold
-shadow-lg
-shadow-blue-500/20
-"
-                  >
-                    View Projects
-                  </button>
-                </div>
-
-                <p className="text-zinc-600 dark:text-zinc-400 mt-4">
-                  Welcome to your AI Portfolio Admin Dashboard.
-                </p>
-              </div>
+<DashboardHero
+  onAddProject={() => setActiveSection("AddProject")}
+  onViewProjects={() => setActiveSection("Projects")}
+/>
 
               {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                <div
-  className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-6
-hover:-translate-y-1
-hover:shadow-xl
-hover:shadow-green-500/10
-hover:border-green-400
-transition-all
-duration-300
-cursor-pointer
-"
->
-                  <h3 className="text-zinc-400 text-sm">Total Projects</h3>
-
-                  <p className="text-4xl font-bold text-black dark:text-white mt-3">
-                    {projects.length}
-                  </p>
-                </div>
-
-                <div
-  className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-6
-hover:-translate-y-1
-hover:shadow-xl
-hover:shadow-green-500/10
-hover:border-green-400
-transition-all
-duration-300
-cursor-pointer
-"
->
-                  <h3 className="text-zinc-400 text-sm">Featured Projects</h3>
-
-                  <p className="text-4xl font-bold text-black dark:text-white mt-3">
-                    {projects.filter((project) => project.featured).length}
-                  </p>
-                </div>
-
-                <div
-  className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-6
-hover:-translate-y-1
-hover:shadow-xl
-hover:shadow-green-500/10
-hover:border-green-400
-transition-all
-duration-300
-cursor-pointer
-"
->
-                  <h3 className="text-zinc-400 text-sm">Admin Status</h3>
-
-                  <p className="text-2xl font-bold text-green-400 mt-3">
-                    Online
-                  </p>
-                </div>
-
-                <div
-  className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-6
-hover:-translate-y-1
-hover:shadow-xl
-hover:shadow-green-500/10
-hover:border-green-400
-transition-all
-duration-300
-cursor-pointer
-"
->
-                  <h3 className="text-zinc-400 text-sm">Portfolio Status</h3>
-
-                  <p className="text-2xl font-bold text-green-400 mt-3">
-                    Active
-                  </p>
-                </div>
-                <div
-  className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-6
-hover:-translate-y-1
-hover:shadow-xl
-hover:shadow-green-500/10
-hover:border-green-400
-transition-all
-duration-300
-cursor-pointer
-"
->
-                  <h3 className="text-zinc-400 text-sm">
-                    Last Created Project
-                  </h3>
-
-                  <p className="text-xl font-bold text-black dark:text-white mt-3">
-                    {latestProject ? latestProject.title : "None"}
-                  </p>
-                </div>
-              </div>
+              <DashboardStatistics
+  projects={projects}
+  latestProject={latestProject}
+/>
 
               {/* Recent Projects */}
-              <div className="
-bg-white
-dark:bg-zinc-900
-border
-border-zinc-300
-dark:border-zinc-800
-rounded-2xl
-p-6
-">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-bold text-black dark:text-white">
-                    Recent Projects
-                  </h3>
-
-                  <span className="text-zinc-400 text-sm">
-                    {projects.length} Project(s)
-                  </span>
-                </div>
-
-                {projects.length === 0 ? (
-                  <div className="text-center py-12">
-                    <p className="text-zinc-500">No projects found.</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {projects.slice(0, 5).map((project) => (
-                      <div
-                        key={project.id}
-                        onClick={() => setActiveSection("Projects")}
-                        className="
-flex items-center justify-between
-bg-zinc-50
-dark:bg-zinc-950
-border
-border-zinc-200
-dark:border-zinc-800
-rounded-2xl
-p-5
-hover:border-green-400
-hover:shadow-lg
-hover:shadow-green-500/10
-cursor-pointer
-transition-all
-duration-300
-"
-                      >
-                        <div>
-                          <h4 className="text-black dark:text-white font-semibold text-lg">
-                            {project.title}
-                          </h4>
-
-                          <p className="text-zinc-400 text-sm mt-1">
-                            {project.techStack.join(", ")}
-                          </p>
-                        </div>
-
-                        {project.featured ? (
-                          <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">
-                            Featured
-                          </span>
-                        ) : (
-                          <span className="bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full text-sm">
-                            Regular
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <RecentProjects
+  projects={projects}
+  onViewProjects={() => setActiveSection("Projects")}
+/>
             </div>
           )}
 

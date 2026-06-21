@@ -6,6 +6,11 @@ import api from "@/src/lib/api";
 
 import LoadingButton from "../ui/LoadingButton";
 import { Experience } from "@/src/types/experience";
+import AdminCard from "./common/AdminCard";
+import AdminSectionHeader from "./common/AdminSectionHeader";
+import AdminInput from "./common/AdminInput";
+import AdminTextarea from "./common/AdminTextarea";
+import AdminFileUpload from "./common/AdminFileUpload";
 interface AddExperienceFormProps {
   setExperiences: React.Dispatch<
     React.SetStateAction<Experience[]>
@@ -57,6 +62,7 @@ const uploadLogo = async () => {
     );
 
     const response =
+    
       await api.post(
         "/upload/image",
         formData,
@@ -80,6 +86,25 @@ const handleCreate = async () => {
 
     setError("");
     setSuccess("");
+    if (!company.trim()) {
+  setError("Company is required.");
+  return;
+}
+
+if (!position.trim()) {
+  setError("Position is required.");
+  return;
+}
+
+if (!startDate) {
+  setError("Start Date is required.");
+  return;
+}
+
+if (!description.trim()) {
+  setError("Description is required.");
+  return;
+}
 
     const logoUrl =
       await uploadLogo();
@@ -148,241 +173,81 @@ const handleCreate = async () => {
 
 
   return (
-    <div
-      className="
-      rounded-2xl
-      border
-      border-zinc-300
-      dark:border-zinc-800
-      bg-white
-      dark:bg-zinc-900
-      p-8
-      "
-    >
-      <h2
-        className="
-        mb-8
-        text-3xl
-        font-bold
-        text-black
-        dark:text-white
-        "
-      >
-        Add Experience
-      </h2>
+    <AdminCard>
+      <AdminSectionHeader
+  title="Add Experience"
+  subtitle="Create and manage your professional experience."
+        />
       <div className="space-y-6">
 
-  <div>
-    <label className="block mb-2 font-medium">
-      Company
-    </label>
+  <AdminInput
+  label="Company"
+  value={company}
+  onChange={(e) =>
+    setCompany(e.target.value)
+  }
+/>
+  <AdminInput
+  label="Position"
+  value={position}
+  onChange={(e) =>
+    setPosition(e.target.value)
+  }
+/>
 
-    <input
-      type="text"
-      value={company}
-      onChange={(e) =>
-        setCompany(e.target.value)
-      }
-      className="
-      w-full
-      rounded-xl
-      border
-      border-zinc-300
-      dark:border-zinc-700
-      bg-zinc-100
-      dark:bg-black
-      px-4
-      py-3
-      "
-    />
-  </div>
-
-  <div>
-    <label className="block mb-2 font-medium">
-      Position
-    </label>
-
-    <input
-      type="text"
-      value={position}
-      onChange={(e) =>
-        setPosition(e.target.value)
-      }
-      className="
-      w-full
-      rounded-xl
-      border
-      border-zinc-300
-      dark:border-zinc-700
-      bg-zinc-100
-      dark:bg-black
-      px-4
-      py-3
-      "
-    />
-  </div>
-
-  <div>
-    <label className="block mb-2 font-medium">
-      Location
-    </label>
-
-    <input
-      type="text"
-      value={location}
-      onChange={(e) =>
-        setLocation(e.target.value)
-      }
-      className="
-      w-full
-      rounded-xl
-      border
-      border-zinc-300
-      dark:border-zinc-700
-      bg-zinc-100
-      dark:bg-black
-      px-4
-      py-3
-      "
-    />
-  </div>
+  <AdminInput
+  label="Location"
+  value={location}
+  onChange={(e) =>
+    setLocation(e.target.value)
+  }
+/>
 
 </div>
 <div className="grid grid-cols-2 gap-6">
 
-  <div>
-    <label className="block mb-2 font-medium">
-      Start Date
-    </label>
+  <AdminInput
+  label="Start Date"
+  type="date"
+  value={startDate}
+  onChange={(e) =>
+    setStartDate(e.target.value)
+  }
+/>
 
-    <input
-      type="date"
-      value={startDate}
-      onChange={(e) =>
-        setStartDate(e.target.value)
-      }
-      className="
-      w-full
-      rounded-xl
-      border
-      border-zinc-300
-      dark:border-zinc-700
-      bg-zinc-100
-      dark:bg-black
-      px-4
-      py-3
-      "
-    />
-  </div>
-
-  <div>
-    <label className="block mb-2 font-medium">
-      End Date
-    </label>
-
-    <input
-      type="date"
-      value={endDate}
-      disabled={currentlyWorking}
-      onChange={(e) =>
-        setEndDate(e.target.value)
-      }
-      className="
-      w-full
-      rounded-xl
-      border
-      border-zinc-300
-      dark:border-zinc-700
-      bg-zinc-100
-      dark:bg-black
-      px-4
-      py-3
-      "
-    />
-  </div>
+  <AdminInput
+  label="End Date"
+  type="date"
+  value={endDate}
+  disabled={currentlyWorking}
+  onChange={(e) =>
+    setEndDate(e.target.value)
+  }
+/>
 
 </div>
-<div>
-  <label
-    className="
-    block
-    mb-2
-    font-medium
-    "
-  >
-    Description
-  </label>
-
-  <textarea
-    value={description}
-    onChange={(e) =>
-      setDescription(e.target.value)
+<AdminTextarea
+  label="Description"
+  value={description}
+  onChange={(e) =>
+    setDescription(e.target.value)
+  }
+/>
+<AdminFileUpload
+  label="Company Logo"
+  accept="image/*"
+  preview={
+    logoFile
+      ? URL.createObjectURL(logoFile)
+      : null
+  }
+  onChange={(e) => {
+    if (e.target.files?.[0]) {
+      setLogoFile(e.target.files[0]);
     }
-    rows={6}
-    className="
-    w-full
-    rounded-xl
-    border
-    border-zinc-300
-    dark:border-zinc-700
-    bg-zinc-100
-    dark:bg-black
-    px-4
-    py-3
-    "
-  />
-</div>
-<div>
-  <label
-    className="
-    block
-    mb-2
-    font-medium
-    "
-  >
-    Company Logo
-  </label>
-
-  <input
-    type="file"
-    accept="image/*"
-    onChange={(e) => {
-      if (e.target.files?.[0]) {
-        setLogoFile(
-          e.target.files[0]
-        );
-      }
-    }}
-    className="
-    w-full
-    rounded-xl
-    border
-    border-zinc-300
-    dark:border-zinc-700
-    bg-zinc-100
-    dark:bg-black
-    px-4
-    py-3
-    "
-  />
-</div>
-{logoFile && (
-  <img
-    src={URL.createObjectURL(
-      logoFile
-    )}
-    alt="Company Logo"
-    className="
-    h-24
-    w-24
-    rounded-xl
-    object-cover
-    border
-    border-zinc-300
-    dark:border-zinc-700
-    "
-  />
-)}
+  }}
+/>
+<div className="grid grid-cols-2 gap-6">
 <div>
   <label
     className="
@@ -415,6 +280,8 @@ const handleCreate = async () => {
     "
   />
 </div>
+</div>
+
 {error && (
   <p className="text-red-500">
     {error}
@@ -445,6 +312,6 @@ const handleCreate = async () => {
 >
   Add Experience
 </LoadingButton>
-    </div>
+    </AdminCard>
   );
 }

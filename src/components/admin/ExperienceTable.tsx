@@ -6,6 +6,13 @@ import api from "@/src/lib/api";
 
 import { Experience } from "@/src/types/experience";
 
+import {
+  Search,
+  Pencil,
+  Trash2,
+  Building2,
+} from "lucide-react";
+
 interface ExperienceTableProps {
   experiences: Experience[];
 
@@ -97,18 +104,42 @@ export default function ExperienceTable({
     <div className="mb-6">
 
       <div className="relative w-96">
+    <div
+  className="
+  flex
+  items-center
+  justify-between
+  mb-8
+  "
+>
+  <h2
+    className="
+    text-3xl
+    font-bold
+    "
+  >
+    Experience
+  </h2>
 
-        <span
-          className="
-          absolute
-          left-4
-          top-1/2
-          -translate-y-1/2
-          text-zinc-500
-          "
-        >
-          🔍
-        </span>
+  <span
+    className="
+    text-sm
+    text-zinc-500
+    "
+  >
+    {experiences.length} Records
+  </span>
+</div>
+        <Search
+  size={18}
+  className="
+  absolute
+  left-4
+  top-1/2
+  -translate-y-1/2
+  text-zinc-500
+  "
+/>
 
         <input
           type="text"
@@ -156,7 +187,7 @@ export default function ExperienceTable({
       "
     >
 
-      <table className="w-full">
+      <table className="w-full min-w-[1000px]">
 
         <thead
           className="
@@ -201,16 +232,25 @@ export default function ExperienceTable({
 
             <tr>
 
-              <td
-                colSpan={6}
-                className="
-                py-10
-                text-center
-                text-zinc-500
-                "
-              >
-                No experience found.
-              </td>
+              <div
+  className="
+  flex
+  flex-col
+  items-center
+  justify-center
+  py-10
+  gap-3
+  "
+>
+  <Building2
+    size={40}
+    className="text-zinc-500"
+  />
+
+  <p className="text-zinc-500">
+    No Experience Added Yet
+  </p>
+</div>
 
             </tr>
 
@@ -246,7 +286,9 @@ export default function ExperienceTable({
                         h-14
                         w-14
                         rounded-xl
-                        object-cover
+                        object-contain
+                        p-2
+                      bg-white
                         border
                         border-zinc-300
                         dark:border-zinc-700
@@ -333,53 +375,40 @@ export default function ExperienceTable({
                       gap-3
                       "
                     >
-                                            <button
-                        onClick={() => {
-
-                          setEditingExperience(
-                            experience
-                          );
-
-                          setEditExperienceOpen(
-                            true
-                          );
-
-                        }}
-                        className="
-                        rounded-xl
-                        border
-                        border-blue-500/20
-                        bg-blue-500/10
-                        px-4
-                        py-2
-                        text-blue-500
-                        transition-all
-                        hover:bg-blue-500/20
-                        "
-                      >
-                        Edit
-                      </button>
+                                           <button
+  onClick={() => {
+    setEditingExperience(experience);
+    setEditExperienceOpen(true);
+  }}
+  className="
+  px-3
+  py-2
+  rounded-lg
+  bg-blue-500
+  hover:bg-blue-600
+  text-white
+  transition-all
+  "
+>
+  <Pencil size={16} />
+</button>
 
                       <button
-                        onClick={() =>
-                          handleDelete(
-                            experience.id
-                          )
-                        }
-                        className="
-                        rounded-xl
-                        border
-                        border-red-500/20
-                        bg-red-500/10
-                        px-4
-                        py-2
-                        text-red-500
-                        transition-all
-                        hover:bg-red-500/20
-                        "
-                      >
-                        Delete
-                      </button>
+  onClick={() =>
+    handleDelete(experience.id)
+  }
+  className="
+  px-3
+  py-2
+  rounded-lg
+  bg-red-500
+  hover:bg-red-600
+  text-white
+  transition-all
+  "
+>
+  <Trash2 size={16} />
+</button>
 
                     </div>
 
