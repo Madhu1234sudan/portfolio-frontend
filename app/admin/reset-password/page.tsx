@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { KeyRound, ArrowLeft } from "lucide-react";
 
 import api from "@/src/lib/api";
-import LoadingButton from "@/src/components/ui/LoadingButton";
+import LoadingButton from "@/src/ui/LoadingButton";
 
 export default function ResetPasswordPage() {
   const router = useRouter();

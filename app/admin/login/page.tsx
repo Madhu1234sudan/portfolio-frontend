@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ShieldCheck } from "lucide-react";
-
-import api from "../../../src/lib/api";
-import LoadingButton from "@/src/components/ui/LoadingButton";
+import axios from "axios";
+import useAuth from "@/src/hooks/useAuth";
+import LoadingButton from "@/src/ui/LoadingButton";
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,26 +18,46 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
 
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleLogin = async (
+  e: React.FormEvent
+) => {
+  e.preventDefault();
+  if (!email.trim() || !password.trim()) {
+  setError("Email and password are required.");
+  return;
+}
+  setLoading(true);
+  setError("");
 
-    try {
-      const response = await api.post("/auth/login", {
-        email,
-        password,
-      });
+  try {
+    await login(email, password);
 
-      sessionStorage.setItem("adminToken", response.data.token);
+    router.replace("/admin/dashboard");
 
-      router.push("/admin");
-    } catch (error) {
-      setError("Invalid credentials");
-    }
-    finally {
-  setLoading(false);
-    }
-  };
+  }  catch (error) {
+
+  console.error(error);
+
+  if (axios.isAxiosError(error)) {
+    console.log(
+      "Backend Response:",
+      error.response?.data
+    );
+
+    setError(
+      error.response?.data?.message ??
+      "Login failed."
+    );
+  } else {
+    setError("Something went wrong.");
+  }
+
+} finally {
+
+    setLoading(false);
+
+  }
+};
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-zinc-100 via-white to-green-50 dark:from-black dark:via-zinc-950 dark:to-black flex items-center justify-center px-6">

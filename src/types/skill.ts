@@ -7,7 +7,7 @@ export interface Skill {
 
   icon: string | null;
 
-  displayOrder: number;
+  order: number;
 
   featured: boolean;
 

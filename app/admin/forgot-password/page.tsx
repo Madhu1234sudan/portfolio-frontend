@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Mail, ArrowLeft } from "lucide-react";
 
 import api from "@/src/lib/api";
-import LoadingButton from "@/src/components/ui/LoadingButton";
+import LoadingButton from "@/src/ui/LoadingButton";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
